@@ -1,0 +1,100 @@
+<?php 
+
+    require_once "connection.php";
+
+    if(!isset($_SESSION['usertype'])){
+        header("Location: index.php");
+    }
+
+    if(isset($_GET['from']) && isset($_GET['to'])){
+         $from = $_GET['from'];
+         $to = $_GET['to'];
+
+
+        $sqlx = "SELECT * FROM cv WHERE archive='No' AND date BETWEEN '$from' AND '$to' ORDER BY payment_method='PHP' DESC";
+                $result = $conn->query($sqlx);
+                
+                $data = "
+
+                <table border='1' class='table table-bordered table-responsive table-hover table-sm' style='width: 90%; margin: 0 auto;'>
+                <thead style='width: 100%;'>
+                    <tr>
+                    <th>CV No..</th>
+                    <th>Payee</th>
+                    <th>Date</th>
+                    <th>Agent</th>
+                    <th>Particular</th>
+                    <th>Passenger Name</th>
+                    <th>Payment Method</th>
+                    <th>ACR</th>
+                    <th>Total Amount</th>
+                    <th>Sum of Peso</th>
+                    <th>Check No.</th>
+                    <th>Received By</th>
+                    <th>Date Received</th>
+                    <th>Prepared By</th>
+                    <th>Checked By</th>
+                    <th>Approved By</th>
+                    </tr>
+                </thead>
+
+                <tbody>";
+
+                while($row = $result->fetch_assoc()){
+                    $varia = 1;
+                    $cv_passengerNameArr = explode(",", $row['cv_passengerName']);
+                    $data.= "<tr>
+                                    <td>$row[cv_Number]</td>
+                                    <td>$row[payee]</td>
+                                    <td>$row[date]</td>
+                                    <td>$row[agent]</td>
+                                    <td>$row[particular]</td>
+                                    ";
+
+                            $data.="<td> ";
+                            
+                                    foreach($cv_passengerNameArr as $cv_passengerNameArrValue){
+                                            $data.= $cv_passengerNameArrValue. '<br>';
+                                    }
+                            $data.="</td>";
+
+                            $data.="
+                                    <td>$row[payment_method]</td>
+                                    <td>$row[acr]</td>
+                                    <td>$row[total_amount]</td>
+                                    <td>$row[sum_of_peso]</td>
+                                    <td>$row[check_no]</td>
+                                    <td>$row[received_by]</td>
+                                    <td>$row[date_received]</td>
+                                    <td>$row[prepared_by]</td>
+                                    <td>$row[checked_by]</td>
+                                    <td>$row[approved_by]</td>
+                                ";
+
+                        }
+                    
+                        $data.= "
+                            </tbody> 
+                        </table> 
+                ";
+
+                    
+
+                    $name = "Check Voucher Report - From: ".$from. " To: ".$to;
+
+                    header("Content-Type: application/xls");
+                    header("Content-Disposition: attachment; filename=$name.xls");
+            
+                    echo $data;
+                
+                
+
+        
+    }
+
+    
+
+
+    
+    
+?>
