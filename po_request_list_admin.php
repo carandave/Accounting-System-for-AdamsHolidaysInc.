@@ -11,6 +11,14 @@
         header("Location: po_list.php");
     }
 
+    $sqlu = "UPDATE notification SET status='seen' WHERE officials_Id='$officials_Id' AND form='PO'";
+    $resultu = $conn->query($sqlu);
+
+    if($resultu){
+        // echo $resultu->num_rows;
+        
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -187,9 +195,18 @@ body{
 
     $(document).ready(function(){
 
-        
-
-
+        $("#po-a-notif").click(function(){
+            console.log("Napindot nga");
+            e.preventDefault();
+            $.ajax({
+                url: './notif_process.php',
+                method: 'POST',
+                data: 'adminid=<?php echo $_SESSION['officialsId']; ?>',
+                success: function(response){
+                    
+                }
+            })
+        });
 
         // START FOR CONFIRMED REQUEST AJAX
 

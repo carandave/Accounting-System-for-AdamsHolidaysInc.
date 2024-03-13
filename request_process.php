@@ -56,10 +56,29 @@ else if(isset($_POST['action']) && $_POST['action'] == "requestPO"){
         $result = $conn->query($sqli);
 
         if($result){
+
+            
             // Kunin natin ang mga id ng mga admin then isave natin yung id ng admin sa notification table para 
+            
+            $sqladmin = "SELECT * FROM officials WHERE user_type='superadmin' OR user_type='admin'";
+            $resultadmin = $conn->query($sqladmin);
+
+            $adminId = [];
+            
+            if($resultadmin->num_rows > 0){
+                while($row = $resultadmin->fetch_assoc()){
+                    $adminId[] = $row['officials_Id'];
+                }
+            }
+
             $statusnotif = "unseen";
-            $sqln = "INSERT INTO notification (`form`, `status`) VALUES ('$form', '$statusnotif')";
-            $resultn = $conn->query($sqln);
+
+            foreach($adminId as $officialsId){
+                $sqln = "INSERT INTO notification (`officials_Id`, `form`, `status`) VALUES ('$officialsId', '$form', '$statusnotif')";
+                $resultn = $conn->query($sqln);
+            }
+            
+            
 
             echo "successInsert";
         }
