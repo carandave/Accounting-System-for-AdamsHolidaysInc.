@@ -11,6 +11,14 @@
         header("Location: po_list.php");
     }
 
+    $sqlu = "UPDATE notification SET status='seen' WHERE officials_Id='$officials_Id' AND form='PO'";
+    $resultu = $conn->query($sqlu);
+
+    if($resultu){
+        // echo $resultu->num_rows;
+        
+    }
+
 ?>
 
 <!DOCTYPE html>

@@ -161,6 +161,7 @@ body{
                                 </form> -->
 
                                 <form action="" id="po-accept-form" >
+                                    <input type="text" class="d-none" name="officials_Id" value="<?php echo $rows['officials_Id'];?>">
                                     <input type="text" class="d-none" name="req_Id" value="<?php echo $rows['req_Id'];?>">
                                     
                                     <input type="submit" class="btn btn-success btn-sm" id="acceptReqBtn" name="acceptReqBtn" value="Confirmed">

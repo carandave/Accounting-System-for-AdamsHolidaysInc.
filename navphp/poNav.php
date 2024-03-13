@@ -60,9 +60,9 @@
 
 
                             <?php if($_SESSION['usertype'] == "user"){?>
-                            <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center">
+                            <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center" id="po-a-user-notif">
                             <div class="dropdownli">
-                                <a href="po_request_list.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">Requested List</a>
+                                <a href="po_request_list.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">Requested List </a>
                             </div>
                             
                             </li>
@@ -71,26 +71,22 @@
 
                             <?php if($_SESSION['usertype'] == "superadmin" || $_SESSION['usertype'] == "admin"){?>
                                 <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center" id="po-a-notif">
-                                <div class="dropdownli">
-                                    <a href="po_request_list_admin.php"  style="font-size: 14px; text-decoration: none; position: relative" class="px-3 py-2 text-light selectli ">PO Requested List <span class="badge badge-danger" id="po_badge" style="position: absolute; top: 0; right: 5px; font-size: 12px; padding: 5 5px">0</span></a>
-                                    
-                                </div>
-                                
+                                    <div class="dropdownli">
+                                        <a href="po_request_list_admin.php"  style="font-size: 14px; text-decoration: none; position: relative" class="px-3 py-2 text-light selectli ">PO Requested List <span class="badge badge-danger" id="po_badge" style="position: absolute; top: 0; right: 5px; font-size: 12px; padding: 5 5px; display: none">0</span></a>
+                                    </div>
                                 </li>
                             <?php } ?>
 
                             <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center">
-                            <div class="dropdownli">
-                                <a href="po_archive_list.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">Archived List</a>
-                            </div>
-                            
+                                <div class="dropdownli">
+                                    <a href="po_archive_list.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">Archived List</a>
+                                </div>
                             </li>
 
                             <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center">
                                 <div class="dropdownli">
                                     <a href="po_settings.php" style="font-size: 14px;text-decoration: none" class="px-3 py-2 text-light selectli ">Settings</a>
                                 </div>
-                                
                             </li>
 
                         <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center">
@@ -120,8 +116,10 @@
                 <script>
 
                     $(document).ready(function(){
+                        $('#po_badge').hide();
                         setInterval(() => {
 
+                            // For Admin Notification
                             $.ajax({
                                 url: './notif_process.php',
                                 method: 'POST',
@@ -130,14 +128,37 @@
                                     console.log(response);
 
                                         if(response != 0){
+                                            $('#po_badge').show();
                                             $('#po_badge').text(response);
                                         }
 
                                         else{
+                                            $('#po_badge').hide();
                                             $('#po_badge').text(0);
                                         }
                                 }
                             })
+
+
+                            // For User Notification
+                            // $.ajax({
+                            //     url: './notif_user_process.php',
+                            //     method: 'POST',
+                            //     data: 'user_id=<?php echo $_SESSION['officialsId']; ?>',
+                            //     success: function(response){
+                            //         console.log(response);
+
+                            //             if(response != 0){
+                            //                 // $('#po_user_badge').show();
+                            //                 $('#po_user_badge').text(response);
+                            //             }
+
+                            //             else{
+                            //                 // $('#po_user_badge').hide();
+                            //                 $('#po_user_badge').text(0);
+                            //             }
+                            //     }
+                            // })
                             
                         }, 1000);
 

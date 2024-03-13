@@ -73,6 +73,15 @@ else if(isset($_POST['action']) && $_POST['action'] == "requestPO"){
 
             $statusnotif = "unseen";
 
+            // $queryNotifPO = "SELECT * FROM notification ORDER BY notif_Id DESC LIMIT 1";
+            // $resultNotifPO = $conn->query($queryNotifPO);
+
+            // if($resultNotifPO){
+            //     $rowNotifPO = $resultNotifPO->fetch_assoc();
+            //     $countNotifPO = $rowNotifPO['action_Id'];
+            //     $actionIdNumber = str_pad((int)$countNotifPO + 1, 2, '0', STR_PAD_LEFT);
+            // }
+
             foreach($adminId as $officialsId){
                 $sqln = "INSERT INTO notification (`officials_Id`, `form`, `status`) VALUES ('$officialsId', '$form', '$statusnotif')";
                 $resultn = $conn->query($sqln);
@@ -176,6 +185,7 @@ else if(isset($_POST['action']) && $_POST['action'] == "confirmedReqAR"){
 }
 
 else if(isset($_POST['action']) && $_POST['action'] == "confirmedReqPO"){
+    $officialsId = $_POST['officials_Id'];
     $reqId = $_POST['req_Id'];
 
     $token = "qwertyuiopasdfghjklzxcvbnm1234567890";
@@ -186,7 +196,11 @@ else if(isset($_POST['action']) && $_POST['action'] == "confirmedReqPO"){
     $resultu = $conn->query($sqlu);
 
     if($resultu){
+
+
         echo "successconfirmedrequest";
+
+        
     }
 
     else{
@@ -205,6 +219,9 @@ else if(isset($_POST['action']) && $_POST['action'] == "confirmedReqSA"){
     $resultu = $conn->query($sqlu);
 
     if($resultu){
+
+        
+
         echo "successconfirmedrequest";
     }
 
