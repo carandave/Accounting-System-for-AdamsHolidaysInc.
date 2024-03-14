@@ -20,7 +20,7 @@
 
                         <?php if($_SESSION['usertype'] == "superadmin" || $_SESSION['usertype'] == "admin"){?>
                         
-                        <li style="list-style: none; width: 100%; " class="nav-item p-2 text-center">
+                        <li style="list-style: none; width: 100%; " class="nav-item p-2 text-center" >
                             <div class="dropdown" >
                             <div class="select">
                                 <span class="selected" style="font-size: 14px;">Activity Logs</span>
@@ -68,9 +68,9 @@
                         <?php } ?>
 
                         <?php if($_SESSION['usertype'] == "superadmin" || $_SESSION['usertype'] == "admin"){?>
-                            <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center">
+                            <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center" id="cr-a-notif">
                             <div class="dropdownli">
-                                <a href="cv_request_list_admin.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">CV Requested List</a>
+                                <a href="cv_request_list_admin.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">CV Requested List <span class="badge badge-danger" id="cr_badge" style="position: absolute; top: -10px; right: 10px; font-size: 12px; padding: 5 5px; ">0</span></a>
                             </div>
                             
                             </li>
@@ -105,3 +105,56 @@
                         </li>
                     </ul>
                 </div>
+
+                <script>
+                    $(document).ready(function(){
+                        $('#cr_badge').hide();
+                        setInterval(() => {
+
+                            // For Admin Notification
+                            $.ajax({
+                                url: './notif_process.php',
+                                method: 'POST',
+                                data: 'cr-id=<?php echo $_SESSION['officialsId']; ?>',
+                                success: function(response){
+                                    console.log(response);
+
+                                        if(response != 0){
+                                            $('#cr_badge').show();
+                                            $('#cr_badge').text(response);
+                                        }
+
+                                        else{
+                                            $('#cr_badge').hide();
+                                            $('#cr_badge').text(0);
+                                        }
+                                }
+                            })
+
+
+                            // For User Notification
+                            // $.ajax({
+                            //     url: './notif_user_process.php',
+                            //     method: 'POST',
+                            //     data: 'user_id=<?php echo $_SESSION['officialsId']; ?>',
+                            //     success: function(response){
+                            //         console.log(response);
+
+                            //             if(response != 0){
+                            //                 // $('#po_user_badge').show();
+                            //                 $('#po_user_badge').text(response);
+                            //             }
+
+                            //             else{
+                            //                 // $('#po_user_badge').hide();
+                            //                 $('#po_user_badge').text(0);
+                            //             }
+                            //     }
+                            // })
+                            
+                        }, 1000);
+
+                        
+
+                    })
+                </script>

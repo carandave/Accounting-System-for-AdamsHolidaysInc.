@@ -11,6 +11,14 @@
         header("Location: cv_list.php");
     }
 
+    $sqlu = "UPDATE notification SET status='seen' WHERE officials_Id='$officials_Id' AND form='CV'";
+    $resultu = $conn->query($sqlu);
+
+    if($resultu){
+        
+        
+    }
+
 ?>
 
 <!DOCTYPE html>

@@ -69,9 +69,9 @@
                         <?php } ?>
 
                         <?php if($_SESSION['usertype'] == "superadmin" || $_SESSION['usertype'] == "admin"){?>
-                            <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center">
+                            <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center" id="sa-a-notif">
                             <div class="dropdownli">
-                                <a href="sa_request_list_admin.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">SA Requested List</a>
+                                <a href="sa_request_list_admin.php" style="font-size: 14px; text-decoration: none" class="px-3 py-2 text-light selectli ">SA Requested List <span class="badge badge-danger" id="sa_badge" style="position: absolute; top: -10px; right: 10px; font-size: 12px; padding: 5 5px; ">0</span></a>
                             </div>
                             
                             </li>
@@ -113,3 +113,56 @@
                         </li> -->
                     </ul>
                 </div>
+
+                <script>
+                    $(document).ready(function(){
+                        $('#sa_badge').hide();
+                        setInterval(() => {
+
+                            // For Admin Notification
+                            $.ajax({
+                                url: './notif_process.php',
+                                method: 'POST',
+                                data: 'sa-id=<?php echo $_SESSION['officialsId']; ?>',
+                                success: function(response){
+                                    console.log(response);
+
+                                        if(response != 0){
+                                            $('#sa_badge').show();
+                                            $('#sa_badge').text(response);
+                                        }
+
+                                        else{
+                                            $('#sa_badge').hide();
+                                            $('#sa_badge').text(0);
+                                        }
+                                }
+                            })
+
+
+                            // For User Notification
+                            // $.ajax({
+                            //     url: './notif_user_process.php',
+                            //     method: 'POST',
+                            //     data: 'user_id=<?php echo $_SESSION['officialsId']; ?>',
+                            //     success: function(response){
+                            //         console.log(response);
+
+                            //             if(response != 0){
+                            //                 // $('#po_user_badge').show();
+                            //                 $('#po_user_badge').text(response);
+                            //             }
+
+                            //             else{
+                            //                 // $('#po_user_badge').hide();
+                            //                 $('#po_user_badge').text(0);
+                            //             }
+                            //     }
+                            // })
+                            
+                        }, 1000);
+
+                        
+
+                    })
+                </script>

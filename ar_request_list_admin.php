@@ -11,6 +11,14 @@
         header("Location: ar_list.php");
     }
 
+    $sqlu = "UPDATE notification SET status='seen' WHERE officials_Id='$officials_Id' AND form='AR'";
+    $resultu = $conn->query($sqlu);
+
+    if($resultu){
+        
+        
+    }
+
     
 
 

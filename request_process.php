@@ -25,6 +25,24 @@ if(isset($_POST['action']) && $_POST['action'] == "requestAR"){
 
         if($result){
             echo "successInsert";
+
+            $sqladmin = "SELECT * FROM officials WHERE user_type='superadmin' OR user_type='admin'";
+            $resultadmin = $conn->query($sqladmin);
+
+            $adminId = [];
+            
+            if($resultadmin->num_rows > 0){
+                while($row = $resultadmin->fetch_assoc()){
+                    $adminId[] = $row['officials_Id'];
+                }
+            }
+
+            $statusnotif = "unseen";
+
+            foreach($adminId as $officialsId){
+                $sqln = "INSERT INTO notification (`officials_Id`, `form`, `status`) VALUES ('$officialsId', '$form', '$statusnotif')";
+                $resultn = $conn->query($sqln);
+            }
         }
 
         else{
@@ -73,15 +91,6 @@ else if(isset($_POST['action']) && $_POST['action'] == "requestPO"){
 
             $statusnotif = "unseen";
 
-            // $queryNotifPO = "SELECT * FROM notification ORDER BY notif_Id DESC LIMIT 1";
-            // $resultNotifPO = $conn->query($queryNotifPO);
-
-            // if($resultNotifPO){
-            //     $rowNotifPO = $resultNotifPO->fetch_assoc();
-            //     $countNotifPO = $rowNotifPO['action_Id'];
-            //     $actionIdNumber = str_pad((int)$countNotifPO + 1, 2, '0', STR_PAD_LEFT);
-            // }
-
             foreach($adminId as $officialsId){
                 $sqln = "INSERT INTO notification (`officials_Id`, `form`, `status`) VALUES ('$officialsId', '$form', '$statusnotif')";
                 $resultn = $conn->query($sqln);
@@ -121,6 +130,26 @@ else if(isset($_POST['action']) && $_POST['action'] == "requestSA"){
         $result = $conn->query($sqli);
 
         if($result){
+            // Kunin natin ang mga id ng mga admin then isave natin yung id ng admin sa notification table para 
+            
+            $sqladmin = "SELECT * FROM officials WHERE user_type='superadmin' OR user_type='admin'";
+            $resultadmin = $conn->query($sqladmin);
+
+            $adminId = [];
+            
+            if($resultadmin->num_rows > 0){
+                while($row = $resultadmin->fetch_assoc()){
+                    $adminId[] = $row['officials_Id'];
+                }
+            }
+
+            $statusnotif = "unseen";
+
+            foreach($adminId as $officialsId){
+                $sqln = "INSERT INTO notification (`officials_Id`, `form`, `status`) VALUES ('$officialsId', '$form', '$statusnotif')";
+                $resultn = $conn->query($sqln);
+            }
+
             echo "successInsert";
         }
 
@@ -154,6 +183,27 @@ else if(isset($_POST['action']) && $_POST['action'] == "requestCV"){
         $result = $conn->query($sqli);
 
         if($result){
+
+            // Kunin natin ang mga id ng mga admin then isave natin yung id ng admin sa notification table para 
+            
+            $sqladmin = "SELECT * FROM officials WHERE user_type='superadmin' OR user_type='admin'";
+            $resultadmin = $conn->query($sqladmin);
+
+            $adminId = [];
+            
+            if($resultadmin->num_rows > 0){
+                while($row = $resultadmin->fetch_assoc()){
+                    $adminId[] = $row['officials_Id'];
+                }
+            }
+
+            $statusnotif = "unseen";
+
+            foreach($adminId as $officialsId){
+                $sqln = "INSERT INTO notification (`officials_Id`, `form`, `status`) VALUES ('$officialsId', '$form', '$statusnotif')";
+                $resultn = $conn->query($sqln);
+            }
+            
             echo "successInsert";
         }
 

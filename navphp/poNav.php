@@ -72,7 +72,7 @@
                             <?php if($_SESSION['usertype'] == "superadmin" || $_SESSION['usertype'] == "admin"){?>
                                 <li style="list-style: none; width: 100%; " class="nav-item  p-2 text-center" id="po-a-notif">
                                     <div class="dropdownli">
-                                        <a href="po_request_list_admin.php"  style="font-size: 14px; text-decoration: none; position: relative" class="px-3 py-2 text-light selectli ">PO Requested List <span class="badge badge-danger" id="po_badge" style="position: absolute; top: 0; right: 5px; font-size: 12px; padding: 5 5px; display: none">0</span></a>
+                                        <a href="po_request_list_admin.php"  style="font-size: 14px; text-decoration: none; position: relative" class="px-3 py-2 text-light selectli ">PO Requested List <span class="badge badge-danger" id="po_badge" style="position: absolute; top: -8px; right: -10px; font-size: 12px; padding: 5 5px; display: none">0</span></a>
                                     </div>
                                 </li>
                             <?php } ?>
