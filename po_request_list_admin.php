@@ -19,6 +19,26 @@
         
     }
 
+    if(isset($_POST['acceptReqBtn'])){
+        $officialsId = $_POST['officials_Id'];
+        $reqId = $_POST['req_Id'];
+
+        $token = "qwertyuiopasdfghjklzxcvbnm1234567890";
+        $token = str_shuffle($token);
+        $token = substr($token, 0,10);
+
+        $sqlu = "UPDATE request_list SET status='Confirmed', token='$token', token_expire=DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE req_Id='$reqId'";
+        $resultu = $conn->query($sqlu);
+
+        if($resultu){
+            
+        }
+
+        else{
+           
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -160,7 +180,8 @@ body{
                                     <input type="submit" class="btn btn-success btn-sm" name="acceptReqBtn" value="Confirmed">
                                 </form> -->
 
-                                <form action="" id="po-accept-form" >
+                                <!-- <form action="" id="po-accept-form" > -->
+                                <form action="" id="po-accept-form" method="POST">
                                     <input type="text" class="d-none" name="officials_Id" value="<?php echo $rows['officials_Id'];?>">
                                     <input type="text" class="d-none" name="req_Id" value="<?php echo $rows['req_Id'];?>">
                                     
@@ -211,46 +232,45 @@ body{
 
         // START FOR CONFIRMED REQUEST AJAX
 
-        $("#acceptReqBtn").click(function(e){
-                e.preventDefault();
-                console.log("napindot si a");
-                // e.preventDefault();
+        // $("#acceptReqBtn").click(function(e){
+        //         e.preventDefault();
+        //         console.log("napindot si a");
 
-                $.ajax({
-                    url: "request_process.php",
-                    method: "POST",
-                    data: $("#po-accept-form").serialize() + "&action=confirmedReqPO",
-                    success : function (response){
+        //         $.ajax({
+        //             url: "request_process.php",
+        //             method: "POST",
+        //             data: $("#po-accept-form").serialize() + "&action=confirmedReqPO",
+        //             success : function (response){
 
-                        console.log(response)
+        //                 console.log(response)
 
-                        if(response == "successconfirmedrequest"){
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'success',
-                                    title: 'Successfully Confirmed the Request!',
-                                    showConfirmButton: false,
-                                    timer: 1300  
-                                }).then(function(){
-                                    window.location = "po_list.php";
-                                })
-                        }
+        //                 if(response == "successconfirmedrequest"){
+        //                         Swal.fire({
+        //                             position: 'center',
+        //                             icon: 'success',
+        //                             title: 'Successfully Confirmed the Request!',
+        //                             showConfirmButton: false,
+        //                             timer: 1300  
+        //                         }).then(function(){
+        //                             window.location = "po_list.php";
+        //                         })
+        //                 }
 
-                        else if(response == "errorconfirmedrequest"){
-                                Swal.fire({
-                                    position: 'center',
-                                    icon: 'success',
-                                    title: 'There is an error, Please try again',
-                                    showConfirmButton: false,
-                                    timer: 1300  
-                                }).then(function(){
-                                    window.location = "po_list.php";
-                                })
-                        }
+        //                 else if(response == "errorconfirmedrequest"){
+        //                         Swal.fire({
+        //                             position: 'center',
+        //                             icon: 'success',
+        //                             title: 'There is an error, Please try again',
+        //                             showConfirmButton: false,
+        //                             timer: 1300  
+        //                         }).then(function(){
+        //                             window.location = "po_list.php";
+        //                         })
+        //                 }
                         
-                    }
-                })
-        })
+        //             }
+        //         })
+        // })
         
     })
 </script>

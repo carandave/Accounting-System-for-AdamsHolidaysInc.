@@ -132,7 +132,7 @@ body{
                             <td><?php echo $rows['agent'];?></td>
                             <td><?php echo $rows['po_category'];?></td>
                             <td><?php echo $rows['supplier'];?></td>
-                            <td><?php echo $rows['particular'];?></td>
+                            <td style="word-break: break-all;"><?php echo $rows['particular'];?></td>
 
                             
 
